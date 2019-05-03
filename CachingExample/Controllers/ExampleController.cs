@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace CachingExample.Controllers
 {
@@ -15,7 +11,9 @@ namespace CachingExample.Controllers
         /// </summary>
         /// <param name="id">Some ID</param>
         /// <returns>A string with a date time in it, indicating when it was calculated.</returns>
-        [HttpGet]
+        
+        //I'll be damned. You cannot put a cache on a webAPI with out of the box MVC.
+        [System.Web.Http.HttpGet]
         public string GetACurrencyValue(int id)
         {
             string money = id.ToString("C0");
