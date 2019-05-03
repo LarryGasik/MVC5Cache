@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using CachingExample.ViewModels.Home;
 
 namespace CachingExample.Controllers
 {
@@ -10,9 +8,10 @@ namespace CachingExample.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            CachingExample.ViewModels.Home.IndexViewModel model = new IndexViewModel();
+            model.FormattedCurrency = (3.5).ToString("C");
+            model.FormattedTime = DateTime.Now.ToString();
+            return View(model);
         }
     }
 }
