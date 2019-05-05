@@ -10,13 +10,15 @@ namespace CachingExample.Controllers
     public class HomeController : Controller
     {
         private ITimeService _timeService;
+        private ICultureInfoService _cultureInfoService;
 
-        public HomeController() : this(new TimeService())
+        public HomeController() : this(new TimeService(), new CultureInfoService())
         {
 
         }
-        public HomeController(ITimeService timeService)
+        public HomeController(ITimeService timeService, ICultureInfoService cultureInfoService)
         {
+            _cultureInfoService = cultureInfoService;
             _timeService = timeService;
         }
 
@@ -26,18 +28,12 @@ namespace CachingExample.Controllers
         /// </summary>
         /// <returns></returns>
         [OutputCache(CacheProfile = "Rarely")]
-        public ActionResult Index()
+        public ViewResult Index()
         {
             IndexViewModel model = new IndexViewModel();
-
-            //Todo: We need to figure out how to generate a cultureInfo when
-            //      the server does not have said language. We need to make
-            //      sure that we loop through each of the languages as well.
-            CultureInfo culture = new CultureInfo(Request.UserLanguages[0]);
+            CultureInfo culture = _cultureInfoService.GetCultureInfo(Request.UserLanguages);
             model.FormattedCurrency = (3.5).ToString("C", culture);
-
-            model.FormattedCurrency = (3.5).ToString("C");
-            model.FormattedTime = _timeService.DateTimeNow().ToString();
+            model.FormattedTime = _timeService.DateTimeNow().ToString(culture);
             return View(model);
         }
 
@@ -46,12 +42,10 @@ namespace CachingExample.Controllers
         /// </summary>
         /// <returns></returns>
         [OutputCache(CacheProfile = "Frequently")]
-        public ActionResult Product()
+        public ViewResult Product()
         {
-
-
             IndexViewModel model = new IndexViewModel();
-            CultureInfo culture = new CultureInfo(Request.UserLanguages[0]);
+            CultureInfo culture = _cultureInfoService.GetCultureInfo(Request.UserLanguages);
             model.FormattedCurrency = (3.5).ToString("C", culture);
             model.FormattedTime = _timeService.DateTimeNow().ToString();
             return View(model);
