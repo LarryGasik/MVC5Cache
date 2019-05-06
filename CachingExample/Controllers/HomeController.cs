@@ -51,6 +51,20 @@ namespace CachingExample.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// This Caching is done right here.
+        /// </summary>
+        /// <returns></returns>
+        [OutputCache(Duration = 60, VaryByParam = "id")]
+        public ViewResult ProductDetail(int id)
+        {
+            IndexViewModel model = new IndexViewModel();
+            CultureInfo culture = _cultureInfoService.GetCultureInfo(Request.UserLanguages);
+            model.FormattedCurrency = id.ToString("C", culture);
+            model.FormattedTime = _timeService.DateTimeNow().ToString();
+            return View(model);
+        }
+
 
     }
 }
