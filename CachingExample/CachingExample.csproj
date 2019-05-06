@@ -162,6 +162,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CultureInfoService.cs" />
+    <Compile Include="Services\ICultureInfoService.cs" />
+    <Compile Include="Services\ITimeService.cs" />
+    <Compile Include="Services\TimeService.cs" />
     <Compile Include="ViewModels\Home\IndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +218,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
