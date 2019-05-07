@@ -6,7 +6,9 @@ using CachingExample.ViewModels.Home;
 
 namespace CachingExample.Controllers
 {
-    
+    /// <summary>
+    /// Larry Sample Summary
+    /// </summary>
     public class HomeController : Controller
     {
         private ITimeService _timeService;
