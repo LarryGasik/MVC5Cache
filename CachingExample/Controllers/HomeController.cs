@@ -54,7 +54,8 @@ namespace CachingExample.Controllers
         }
 
         /// <summary>
-        /// This Caching is done right here.
+        /// This Caching is configured right here.
+        /// Every different value for id will be cached.
         /// </summary>
         /// <returns></returns>
         [OutputCache(Duration = 60, VaryByParam = "id")]
@@ -64,6 +65,22 @@ namespace CachingExample.Controllers
             CultureInfo culture = _cultureInfoService.GetCultureInfo(Request.UserLanguages);
             model.FormattedCurrency = id.ToString("C", culture);
             model.FormattedTime = _timeService.DateTimeNow().ToString();
+            return View(model);
+        }
+
+        /// <summary>
+        /// This is custom Caching. Inside the Global.asax file, there's a
+        /// method that will take the HTTP request, and you can build your
+        /// own custom caching method.
+        /// </summary>
+        /// <returns></returns>
+        [OutputCache(Duration=60, VaryByCustom = "Language")]
+        public ViewResult ByLanguage()
+        {
+            IndexViewModel model = new IndexViewModel();
+            CultureInfo culture = _cultureInfoService.GetCultureInfo(Request.UserLanguages);
+            model.FormattedCurrency = (3.5).ToString("C", culture);
+            model.FormattedTime = _timeService.DateTimeNow().ToString(culture);
             return View(model);
         }
 

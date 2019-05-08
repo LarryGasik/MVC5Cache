@@ -19,5 +19,14 @@ namespace CachingExample
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        public override string GetVaryByCustomString(HttpContext context, string arg)
+        {
+            if (arg == "Language" && Request.UserLanguages.Any())
+            {
+                return Request.UserLanguages[0];
+            }
+            return base.GetVaryByCustomString(context, arg);
+        }
     }
 }
